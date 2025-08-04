@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export class Terrain extends THREE.Mesh {
+export class World extends THREE.Mesh {
   constructor(width, height) {
     super();
 
@@ -48,11 +48,9 @@ export class Terrain extends THREE.Mesh {
 createTrees() {
     const treeRadius = 0.2;
     const treeHeight = 1;
-    
-
-    // Clean up old trees
+ 
     if (this.trees) {
-        this.remove(this.trees); // Remove from scene
+        this.remove(this.trees);
 
         this.trees.children.forEach(child => {
             child.geometry.dispose();

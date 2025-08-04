@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from '../src/libs/stats.module.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';    
-import { Terrain } from './terrain';
+import { World } from './world.js';
 
 const gui = new GUI();
 gui.domElement.id = 'gui';
@@ -24,14 +24,13 @@ camera.position.set(10, 2, 10);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
-const terrain = new Terrain(10, 10);
-scene.add(terrain);
+const world = new World(10, 10);
+scene.add(world);
 
 const sun = new THREE.DirectionalLight();
 sun.intensity = 3;
 sun.position.set(1, 2, 3);
 scene.add(sun);
-
 
 const ambientLight = new THREE.AmbientLight(0x404040);
 ambientLight.intensity = 0.5;
@@ -57,21 +56,19 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    const terrainFolder = gui.addFolder('Terrain');
-console.log(terrain.terrain);
-const widthController = terrainFolder.add(terrain, 'width', 1, 20, 1).name('Width');
-const heightController = terrainFolder.add(terrain, 'height', 1, 20, 1).name('Height');
-terrainFolder.addColor(terrain.material, 'color').name('Color');
+    const terrainFolder = gui.addFolder('World');
+console.log(world.terrain);
+const widthController = terrainFolder.add(world, 'width', 1, 20, 1).name('Width');
+const heightController = terrainFolder.add(world, 'height', 1, 20, 1).name('Height');
+terrainFolder.addColor(world.material, 'color').name('Color');
 
 widthController.onChange(() => {
-  terrain.createTerrain();
-  terrain.createTrees();
+  world.createTerrain();
+  world.createTrees();
 });
 
 heightController.onChange(() => {
-  terrain.createTerrain();
-  terrain.createTrees();
+  world.createTerrain();
+  world.createTrees();
 });
 
-
-    
