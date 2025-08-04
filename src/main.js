@@ -1,14 +1,14 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import Stats from '../src/libs/stats.module.js';
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js';    
-import { World } from './world.js';
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import Stats from "../src/libs/stats.module.js";
+import { GUI } from "three/addons/libs/lil-gui.module.min.js";
+import { World } from "./world.js";
 
 const gui = new GUI();
-gui.domElement.id = 'gui';
+gui.domElement.id = "gui";
 
 const stats = new Stats();
-stats.dom.id = 'stats';
+stats.dom.id = "stats";
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -19,7 +19,12 @@ document.body.appendChild(stats.dom);
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 camera.position.set(10, 2, 10);
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -50,17 +55,19 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-window.addEventListener('resize', () => {   
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
 
-    const terrainFolder = gui.addFolder('World');
+const worldFolder = gui.addFolder("World");
 console.log(world.terrain);
-const widthController = terrainFolder.add(world, 'width', 1, 20, 1).name('Width');
-const heightController = terrainFolder.add(world, 'height', 1, 20, 1).name('Height');
-terrainFolder.addColor(world.material, 'color').name('Color');
+const widthController = worldFolder.add(world, "width", 1, 20, 1).name("Width");
+const heightController = worldFolder
+  .add(world, "height", 1, 20, 1)
+  .name("Height");
+worldFolder.addColor(world.material, "color").name("Color");
 
 widthController.onChange(() => {
   world.createTerrain();
@@ -71,4 +78,3 @@ heightController.onChange(() => {
   world.createTerrain();
   world.createTrees();
 });
-
